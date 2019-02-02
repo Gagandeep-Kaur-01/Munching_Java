@@ -62,12 +62,14 @@ public class filter
 			try (BufferedReader br = Files.newBufferedReader(pathToFile, StandardCharsets.US_ASCII)) 
 			{ 
 			// read the first line from the csv file 
-			String line = br.readLine(); // loop until all lines are read while (line != null) 
+			String line = br.readLine(); // loop until all lines are read 
+			while (line != null) 
 			{
 		// use string.split to load a string array with the values from // each line of the file, using a comma as the delimiter 
 				String[] attributes = line.split(","); 
 				File fil = createFile(attributes); 
 				
+				files.add(fil);  // adding file into array list
 				// if end of file reached, line would be null 
 				line = br.readLine(); 
 				} 
