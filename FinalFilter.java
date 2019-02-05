@@ -39,53 +39,45 @@ class File {
 
     public String getValues() {
      
-
         return values;
-    
-     
-      
+        
     }
 
     public void setValues(String values) {
-        if(values == "Commercial"){                      //  filter as per requirement
+                
             this.values =values;
-        }
-        
-        
+             
     }
 
     
-    public String toString() {
-      // if( values =="Commercial"){   
-        return "Values are: [statecode=" + statecode + ", county=" + county + ", line=" + values + "]";
-	 //  }
-	//   else {
-	//	   return null;
-	//   }
+   public String toString() {
+   
+  return "Values are: [statecode=" + statecode + ", county=" + county + ", line=" + values + "]";
+	
     }
-}
+    }
 
 public class FinalFilter {
     public static void main(String[] args) {
         List<File> files = readFilesFromCSV("data.csv");
-        for (File f : files) {
-		//	if(f.getValues() == "Commercial") {
-          System.out.println(f);
-		
-		//	}
+        for (File f : files) {    
+               if(f.getValues().equals("Commercial")) {                //  filter as per requirement
+                System.out.println(f);
+			    }
         }
-	
-    }
+	}
 
     private static List<File> readFilesFromCSV(String fileName) {
         List<File> files = new ArrayList<>();
         Path pathToFile = Paths.get(fileName);
+		
         try (BufferedReader br = Files.newBufferedReader(pathToFile, StandardCharsets.US_ASCII)) {
             // read the first line from the csv file
             String line = br.readLine(); //  loop until all lines are read
-         
+          
             while (line != null) {
-                // use string.split to load a string array with the values from // each line of the file, using a comma as the delimiter
+                // use string.split to load a string array with the values from 
+				// each line of the file, using a comma as the delimiter
 
                 String[] attributes = line.split(",");
                 File fil = createFile(attributes);
@@ -95,7 +87,12 @@ public class FinalFilter {
                 line = br.readLine();
             }
         }
-      
+		
+		
+        //catch(NumberFormatException ex){ // handle exception
+        //   System.out.println("Number Format Exception");
+        //   }
+		
         catch (IOException ioe) {
             //ioe.printStackTrace();
             System.out.println("Please give the right path of the file");
