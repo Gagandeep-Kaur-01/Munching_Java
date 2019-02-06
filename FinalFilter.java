@@ -8,18 +8,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 class File {
-
+    private String policyID;
     private String statecode;
     private String county;
-    private String values;
+	private String values;
+	private String construction;
+    private String point_granularity;
+	
 
-    public File(String statecode, String county, String values) {
 
+
+public File(String policyID, String statecode, String county,String values, String construction, String point_granularity) { 
+        this.policyID = policyID;
         this.statecode = statecode;
         this.county = county;
-        this.values = values;
+		this.values = values;
+		this.construction = construction;
+		this. point_granularity =  point_granularity;
       
     }
+
+public String getid() {
+	return policyID;
+}
+public void setid(String statecode) {
+	this.policyID = policyID;
+}
 
     public String getcode() {
         return statecode;
@@ -49,20 +63,43 @@ class File {
              
     }
 
-    
+    public String getConst() {
+		return construction;
+	}
+	
+	public void setConst(String construction) {
+		this.construction = construction;
+	}
+	 
+	  public String getpoint() {
+		return point_granularity;
+	}
+	
+	public void setpoint(String point_granularity) {
+		this.point_granularity = point_granularity;
+	}
+	 
    public String toString() {
    
-  return "Values are: [statecode=" + statecode + ", county=" + county + ", line=" + values + "]";
+  return "Values are: [id= "+ policyID +", statecode=" + statecode + ", county=" + county + ", line=" + values + ", construction= "+ construction +", granularity= " + point_granularity +" ]";
 	
     }
     }
-
+	
+	
 public class FinalFilter {
+
     public static void main(String[] args) {
+		   int count = 0;
         List<File> files = readFilesFromCSV("data.csv");
-        for (File f : files) {    
+        for (File f : files) {                                               //for(type var : array) { Statement using var; }
                if(f.getValues().equals("Commercial")) {                //  filter as per requirement
-                System.out.println(f);
+               
+				System.out.println(f);
+				
+				count++;
+				
+			
 			    }
         }
 	}
@@ -74,17 +111,18 @@ public class FinalFilter {
         try (BufferedReader br = Files.newBufferedReader(pathToFile, StandardCharsets.US_ASCII)) {
             // read the first line from the csv file
             String line = br.readLine(); //  loop until all lines are read
-          
+       
             while (line != null) {
                 // use string.split to load a string array with the values from 
 				// each line of the file, using a comma as the delimiter
-
+	
                 String[] attributes = line.split(",");
                 File fil = createFile(attributes);
 
                 files.add(fil);  // adding file into array list
                 // if end of file reached, line would be null
                 line = br.readLine();
+				
             }
         }
 		
@@ -102,12 +140,15 @@ public class FinalFilter {
 
     private static File createFile(String[] metadata) {
       
+	    String policyID = metadata[0];
         String statecode = metadata[1];
         String county = metadata[2];
         String values = metadata[15];
+		String construction = metadata[16];
+		String point_granularity = metadata[17];
 
         
-        return new File(statecode, county, values);
+       return new File(policyID,statecode, county, values, construction, point_granularity);
      
     }
 }
